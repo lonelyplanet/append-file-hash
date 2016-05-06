@@ -1,0 +1,22 @@
+{
+  "name": "lonelyplanet/append-file-hash",
+  "description": "Append a file hash to file names for media library uploads.",
+  "type": "wordpress-plugin",
+  "license": "proprietary",
+  "keywords": [
+    "Lonely Planet",
+    "WordPress",
+    "Media Library",
+    "file",
+    "hash"
+  ],
+  "authors": [
+    {
+      "name": "Eric King",
+      "email": "eric.king@lonelyplanet.com"
+    }
+  ],
+  "require": {
+    "composer/installers": "^1.0"
+  }
+}
