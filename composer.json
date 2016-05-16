@@ -13,7 +13,9 @@
   "authors": [
     {
       "name": "Eric King",
-      "email": "eric.king@lonelyplanet.com"
+      "email": "eric.king@lonelyplanet.com",
+      "homepage": "http://webdeveric.com",
+      "role": "Developer"
     }
   ],
   "require": {
