@@ -11,35 +11,39 @@ Author URI: http://webdeveric.com/
 
 namespace LonelyPlanet\AppendFileHash;
 
-function shortFileHash($hash, $filepath)
+function md5FileHash($hash, $data, $filepath, $filename, $mimes)
 {
-    if (is_readable($filepath)) {
-        return substr(md5_file($filepath), 0, 12);
-    }
+    $md5Hash = md5_file($filepath);
 
-    return $hash;
+    return $md5Hash !== false ? substr($md5Hash, 0, 12) : $hash;
+}
+
+function buildProperFilename($properFilename, $cleanFilename, $hash, $ext, $filepath, $mimes)
+{
+    $ext = $ext ? '.' . strtolower($ext) : '';
+
+    return "{$cleanFilename}-{$hash}{$ext}";
 }
 
 function checkFiletypeAndExt(array $data, $filepath, $filename, $mimes)
 {
-    $hash = apply_filters('append-file-hash', false, $filepath);
+    $hash = apply_filters('afh-file-hash', false, $data, $filepath, $filename, $mimes);
 
     if ($hash !== false) {
-        $clean_filename = sprintf(
-            '%s-%s',
+        $data['proper_filename'] = apply_filters(
+            'afh-proper-filename',
+            $data['proper_filename'],
             pathinfo(sanitize_file_name($filename), PATHINFO_FILENAME),
-            $hash
+            $hash,
+            $data['ext'],
+            $filepath,
+            $mimes
         );
-
-        if (isset($data['ext']) && $data['ext']) {
-            $clean_filename .= '.' . strtolower($data['ext']);
-        }
-
-        $data['proper_filename'] = $clean_filename;
     }
 
     return $data;
 }
 
 add_filter('wp_check_filetype_and_ext', __NAMESPACE__ . '\checkFiletypeAndExt', 10, 4);
-add_filter('append-file-hash', __NAMESPACE__ . '\shortFileHash', 10, 2);
+add_filter('afh-file-hash', __NAMESPACE__ . '\md5FileHash', 10, 5);
+add_filter('afh-proper-filename', __NAMESPACE__ . '\buildProperFilename', 10, 6);
