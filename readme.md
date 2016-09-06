@@ -21,7 +21,7 @@ If you're using Composer to manage dependencies, please add the following to you
 
 ```json
 "require": {
-  "lonelyplanet/append-file-hash": "1.0.0"
+  "lonelyplanet/append-file-hash": "^1.0.0"
 }
 ```
 
@@ -29,7 +29,7 @@ If you're using Composer to manage dependencies, please add the following to you
 
 ### Customize the file hash
 
-By default, this plugin will use the md5 file hash and append it to the filename.
+By default, this plugin will use the [md5_file](http://php.net/md5_file) hash and append it to the filename.
 If you'd like to customize the hash, you can use the `afh-file-hash` filter.
 
 In this example, the sha1 file hash is returned.
